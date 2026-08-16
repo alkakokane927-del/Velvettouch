@@ -1,0 +1,4 @@
+node_modules/
+.env
+deploy_key
+deploy_key.pub
