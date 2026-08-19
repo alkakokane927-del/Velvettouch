@@ -102,7 +102,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .sidebar-logout:hover{color:var(--red)}
 
 /* ======= MAIN ======= */
-#main{flex:1;overflow-y:auto;min-height:100vh}
+#main{flex:1;overflow-y:auto;min-height:0;height:100vh}
 .main-header{
   padding:20px 28px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
@@ -188,6 +188,77 @@ tr:hover td{background:rgba(255,255,255,.03)}
 /* ======= EMPTY STATE ======= */
 .empty-state{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 
+
+/* ======= CMS & MODAL STYLES ======= */
+.cms-grid { display: grid; grid-template-columns: 250px 1fr; gap: 24px; }
+.cms-nav { display: flex; flex-direction: column; gap: 8px; }
+.cms-nav-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted); padding: 12px 16px; border-radius: 8px; text-align: left; cursor: pointer; transition: all 0.2s; font-family: var(--font); font-size: 13px; font-weight: 500; }
+.cms-nav-btn:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+.cms-nav-btn.active { background: rgba(201,169,110,0.15); border-color: rgba(201,169,110,0.3); color: var(--gold); }
+.cms-section { display: none; }
+.cms-section.active { display: block; }
+
+.services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 20px; }
+.service-card-admin { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: transform 0.2s; position: relative; }
+.service-card-admin:hover { transform: translateY(-4px); border-color: rgba(201,169,110,0.3); }
+.service-card-img { width: 100%; height: 140px; object-fit: cover; }
+.service-card-body { padding: 16px; }
+.service-card-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.service-card-desc { font-size: 12px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.service-card-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s; }
+.service-card-admin:hover .service-card-actions { opacity: 1; }
+.action-btn-circle { width: 32px; height: 32px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; background: rgba(15,10,12,0.8); color: #fff; backdrop-filter: blur(4px); transition: all 0.2s; }
+.action-btn-circle:hover { background: var(--primary); transform: scale(1.1); }
+.action-btn-circle.delete { background: rgba(224,82,82,0.8); }
+.action-btn-circle.delete:hover { background: #ff4444; }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-content { background: var(--card); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 500px; padding: 30px; transform: translateY(20px); transition: transform 0.3s; box-shadow: 0 24px 64px rgba(0,0,0,0.4); max-height: 90vh; overflow-y: auto; }
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.modal-title { font-size: 18px; font-family: 'Cormorant Garamond', serif; font-weight: 700; color: var(--gold); }
+.modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+.modal-close:hover { color: var(--text); }
+
+
+/* ======= CMS & MODAL STYLES ======= */
+.cms-grid{display:grid;grid-template-columns:220px 1fr;gap:24px}
+.cms-nav{display:flex;flex-direction:column;gap:8px}
+.cms-nav-btn{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted);padding:12px 16px;border-radius:8px;text-align:left;cursor:pointer;transition:all .2s;font-family:var(--font);font-size:13px;font-weight:500}
+.cms-nav-btn:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.cms-nav-btn.active{background:rgba(201,169,110,.15);border-color:rgba(201,169,110,.3);color:var(--gold)}
+.cms-section{display:none}.cms-section.active{display:block}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:20px}
+.service-card-admin{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:transform .2s;position:relative}
+.service-card-admin:hover{transform:translateY(-4px);border-color:rgba(201,169,110,.3)}
+.service-card-img{width:100%;height:140px;object-fit:cover}
+.service-card-body{padding:16px}
+.service-card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.service-card-desc{font-size:12px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.service-card-actions{position:absolute;top:10px;right:10px;display:flex;gap:6px;opacity:0;transition:opacity .2s}
+.service-card-admin:hover .service-card-actions{opacity:1}
+.action-btn-circle{width:32px;height:32px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(15,10,12,.8);color:#fff;backdrop-filter:blur(4px);transition:all .2s;font-size:14px}
+.action-btn-circle:hover{background:var(--primary);transform:scale(1.1)}
+.action-btn-circle.delete{background:rgba(224,82,82,.8)}
+.action-btn-circle.delete:hover{background:#ff4444}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.active{opacity:1;pointer-events:auto}
+.modal-content{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:520px;padding:30px;transform:translateY(20px);transition:transform .3s;box-shadow:0 24px 64px rgba(0,0,0,.4);max-height:90vh;overflow-y:auto}
+.modal-overlay.active .modal-content{transform:translateY(0)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.modal-title{font-size:18px;font-family:"Cormorant Garamond",serif;font-weight:700;color:var(--gold)}
+.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+.modal-close:hover{color:var(--text)}
+.img-preview-box{margin-bottom:14px;border:1px dashed var(--border);padding:10px;border-radius:8px;text-align:center;background:rgba(0,0,0,.2);min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.img-preview-box p{font-size:11px;color:var(--muted)}
+.img-preview-box img{max-width:100%;max-height:200px;border-radius:6px}
+.upload-hint{font-size:10px;color:var(--gold);margin-top:5px}
+.progress-wrap{display:none;margin-top:8px}
+.progress-header{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.progress-track{width:100%;height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--gold));border-radius:3px;transition:width .2s;width:0%}
+
 /* ======= SCROLLBAR ======= */
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -231,6 +302,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
     <button class="nav-item" data-tab="heatmap"><span class="nav-icon">🌡️</span> Heatmap</button>
     <button class="nav-item" data-tab="engagement"><span class="nav-icon">💡</span> Engagement</button>
     <div class="nav-section-label" style="margin-top:8px">Content</div>
+    <button class="nav-item" data-tab="frontend"><span class="nav-icon">🖼️</span> Frontend</button>
     <button class="nav-item" data-tab="services"><span class="nav-icon">💆</span> Services</button>
   </nav>
   <div class="sidebar-footer">
@@ -377,31 +449,134 @@ tr:hover td{background:rgba(255,255,255,.03)}
     </div>
   </div>
   
+  <!-- ====== FRONTEND TAB ====== -->
+  <div class="tab-pane" id="tab-frontend">
+    <div class="cms-grid">
+      <div class="cms-nav">
+        <button class="cms-nav-btn active" data-cms="hero">🖼️ Hero Section</button>
+        <button class="cms-nav-btn" data-cms="highlights">✨ Highlights</button>
+        <button class="cms-nav-btn" data-cms="contact">📞 Contact</button>
+      </div>
+      <div class="chart-card">
+        <!-- Hero -->
+        <div class="cms-section active" id="cms-hero">
+          <div class="chart-title" style="margin-bottom:4px">Hero Section</div>
+          <div class="chart-sub" style="margin-bottom:20px">Edit the homepage hero headline and background image.</div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Eyebrow / Tagline</label>
+            <input type="text" id="fc-hero-eyebrow" class="table-search" style="width:100%" placeholder="e.g. Your Journey to Serenity Begins Here">
+          </div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Main Headline <span style="color:var(--gold);font-size:10px">(HTML: &lt;br&gt; &lt;em&gt; allowed)</span></label>
+            <textarea id="fc-hero-title" class="table-search" style="width:100%;height:72px;resize:vertical"></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Subtitle</label>
+            <textarea id="fc-hero-subtitle" class="table-search" style="width:100%;height:60px;resize:vertical"></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">Background Image <span style="font-size:10px;color:var(--gold)">Recommended: 1920×1080px · Max 5MB</span></label>
+            <div class="img-preview-box">
+              <p>Current hero background will appear here after saving</p>
+              <img id="fc-hero-preview" src="" style="display:none">
+            </div>
+            <input type="file" id="fc-hero-image" class="table-search" style="width:100%" accept="image/*">
+            <div class="progress-wrap" id="fc-hero-progress">
+              <div class="progress-header"><span>Uploading…</span><span id="fc-hero-pct">0%</span></div>
+              <div class="progress-track"><div class="progress-fill" id="fc-hero-bar"></div></div>
+            </div>
+          </div>
+          <button id="btn-save-frontend" class="hm-btn" style="background:var(--gold);border-color:var(--gold);color:#000;font-weight:700">💾 Save Changes</button>
+          <span id="fc-msg" style="margin-left:12px;font-size:12px;color:var(--green)"></span>
+        </div>
+        <!-- Highlights -->
+        <div class="cms-section" id="cms-highlights">
+          <div class="chart-title" style="margin-bottom:4px">Highlight Sections</div>
+          <div class="chart-sub" style="margin-bottom:20px">Edit mid-page copy blocks.</div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Why Us — Heading</label>
+            <input type="text" id="fc-whyus-heading" class="table-search" style="width:100%">
+          </div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Swedish Massage — Title</label>
+            <input type="text" id="fc-swedish-title" class="table-search" style="width:100%">
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Swedish Massage — Description</label>
+            <textarea id="fc-swedish-desc" class="table-search" style="width:100%;height:80px;resize:vertical"></textarea>
+          </div>
+          <button id="btn-save-highlights" class="hm-btn" style="background:var(--gold);border-color:var(--gold);color:#000;font-weight:700">💾 Save Highlights</button>
+          <span id="fc-highlights-msg" style="margin-left:12px;font-size:12px;color:var(--green)"></span>
+        </div>
+        <!-- Contact -->
+        <div class="cms-section" id="cms-contact">
+          <div class="chart-title" style="margin-bottom:4px">Contact &amp; Footer</div>
+          <div class="chart-sub" style="margin-bottom:20px">Update phone and email across the site.</div>
+          <div class="form-group" style="margin-bottom:14px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Phone Number</label>
+            <input type="text" id="fc-contact-phone" class="table-search" style="width:100%" placeholder="+91 98765 43210">
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Email Address</label>
+            <input type="email" id="fc-contact-email" class="table-search" style="width:100%" placeholder="hello@velvettouch.in">
+          </div>
+          <button id="btn-save-contact" class="hm-btn" style="background:var(--gold);border-color:var(--gold);color:#000;font-weight:700">💾 Save Contact</button>
+          <span id="fc-contact-msg" style="margin-left:12px;font-size:12px;color:var(--green)"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SERVICES TAB ====== -->
   <div class="tab-pane" id="tab-services">
-    <div class="chart-card">
-      <div class="chart-title">Add Custom Service</div>
-      <div class="chart-sub" style="margin-bottom: 20px;">These services will be displayed dynamically on the homepage.</div>
-      
-      <div class="form-group" style="margin-bottom: 15px;">
-        <label style="display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px;">Service Name</label>
-        <input type="text" id="cs-name" class="table-search" style="width: 100%; max-width: 400px;" placeholder="e.g. Hot Stone Massage">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--text)">Manage Services</h2>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px">Add, edit, or remove services displayed on the homepage.</p>
       </div>
-      <div class="form-group" style="margin-bottom: 15px;">
-        <label style="display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px;">Description</label>
-        <textarea id="cs-desc" class="table-search" style="width: 100%; max-width: 400px; height: 80px; resize: vertical;" placeholder="Short description of the service"></textarea>
+      <button class="export-btn" id="btn-open-service-modal" style="background:var(--gold);border-color:var(--gold);color:#000;font-weight:700">+ Add New Service</button>
+    </div>
+    <div id="manage-services-table-wrap"><div class="empty-state">Loading services…</div></div>
+  </div>
+
+  <!-- ====== SERVICE MODAL ====== -->
+  <div class="modal-overlay" id="service-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="cs-form-title">Add New Service</h3>
+        <button class="modal-close" id="btn-close-service-modal">&times;</button>
       </div>
-      <div class="form-group" style="margin-bottom: 15px;">
-        <label style="display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px;">Icon (Emoji/Symbol)</label>
-        <input type="text" id="cs-icon" class="table-search" style="width: 100%; max-width: 100px;" placeholder="e.g. 💆">
+      <input type="hidden" id="cs-id" value="">
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Service Name</label>
+        <input type="text" id="cs-name" class="table-search" style="width:100%" placeholder="e.g. Hot Stone Massage">
       </div>
-      <div class="form-group" style="margin-bottom: 25px;">
-        <label style="display:block; font-size: 12px; color: var(--muted); margin-bottom: 5px;">Service Image (File)</label>
-        <input type="file" id="cs-image-file" class="table-search" style="width: 100%; max-width: 400px;" accept="image/*">
-        <div style="font-size: 11px; color: var(--gold); margin-top: 6px;">Recommended Image Size: 800x600px (4:3 ratio)</div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Description</label>
+        <textarea id="cs-desc" class="table-search" style="width:100%;height:80px;resize:vertical" placeholder="Short description of the service"></textarea>
       </div>
-      
-      <button id="btn-add-service" class="hm-btn">Add Service</button>
-      <div id="cs-msg" style="margin-top: 10px; font-size: 12px; color: var(--green);"></div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Icon (Emoji)</label>
+        <input type="text" id="cs-icon" class="table-search" style="width:90px" placeholder="💆">
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">Service Image <span style="font-size:10px;color:var(--gold)">Recommended: 800×800px · Square · Max 3MB</span></label>
+        <div class="img-preview-box">
+          <p>Image preview — select a file below</p>
+          <img id="cs-image-preview" src="" style="display:none">
+        </div>
+        <input type="file" id="cs-image-file" class="table-search" style="width:100%" accept="image/*">
+        <input type="hidden" id="cs-existing-image" value="">
+        <div class="progress-wrap" id="cs-image-progress">
+          <div class="progress-header"><span>Uploading…</span><span id="cs-pct">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="cs-bar"></div></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button id="btn-cancel-service" class="hm-btn" style="background:transparent;border-color:var(--border);color:var(--muted)">Cancel</button>
+        <button id="btn-add-service" class="hm-btn" style="background:var(--gold);border-color:var(--gold);color:#000;font-weight:700">Save Service</button>
+      </div>
+      <div id="cs-msg" style="margin-top:10px;font-size:12px;color:var(--green);text-align:right"></div>
     </div>
   </div>
 </div>
@@ -458,6 +633,9 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 document.getElementById('header-date').textContent =
   new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
+
+
+
 /* ---- TABS ---- */
 document.querySelectorAll('.nav-item[data-tab]').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -470,6 +648,8 @@ document.querySelectorAll('.nav-item[data-tab]').forEach(btn=>{
     if(btn.dataset.tab==='heatmap') setTimeout(drawHeatmap,100);
     if(btn.dataset.tab==='engagement') setTimeout(drawEngagement,100);
     if(btn.dataset.tab==='traffic') setTimeout(drawTraffic,100);
+    if(btn.dataset.tab==='services') setTimeout(loadManageServices,100);
+    if(btn.dataset.tab==='frontend') setTimeout(loadFrontendContent,100);
   });
 });
 
@@ -702,6 +882,10 @@ async function initDashboard(){
 
   /* ---- Traffic metrics ---- */
   buildTrafficTab(sessions);
+
+  /* ---- Load CMS content tabs ---- */
+  loadFrontendContent();
+  loadManageServices();
 }
 
 /* ============================================
@@ -999,80 +1183,252 @@ window.addEventListener('resize',()=>{
   if(active&&active.id==='tab-heatmap') drawHeatmap();
 });
 
-/* ---- CUSTOM SERVICES LOGIC ---- */
-const addServiceBtn = document.getElementById('btn-add-service');
-if (addServiceBtn) {
-  addServiceBtn.addEventListener('click', async () => {
-    const name = document.getElementById('cs-name').value.trim();
-    const desc = document.getElementById('cs-desc').value.trim();
-    const icon = document.getElementById('cs-icon').value.trim();
-    const fileInput = document.getElementById('cs-image-file');
-    const msg = document.getElementById('cs-msg');
-    
-    if (!name || !desc || !icon || !fileInput.files.length) {
-      msg.style.color = 'var(--red)';
-      msg.innerText = 'Please fill all fields and select an image.';
-      return;
-    }
-    
-    msg.style.color = 'var(--gold)';
-    msg.innerText = 'Uploading image...';
-    addServiceBtn.disabled = true;
-
-    try {
-      // 1. Upload Image
-      const formData = new FormData();
-      formData.append('image', fileInput.files[0]);
-
-      const uploadRes = await fetch('/api/upload', {
-        method: 'POST',
-        headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {},
-        body: formData
-      });
-
-      if (!uploadRes.ok) throw new Error('Image upload failed');
-      const uploadData = await uploadRes.json();
-      const imageUrl = uploadData.url;
-
-      msg.innerText = 'Saving service...';
-
-      // 2. Save Service
-      const newService = {
-        id: 'cs-' + Date.now(),
-        name, desc, icon, image: imageUrl
-      };
-
-      if (authToken) {
-        await fetchApi('/api/services', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newService)
-        });
-      } else {
-        // Local fallback
-        const services = JSON.parse(localStorage.getItem('customServices') || '[]');
-        services.push(newService);
-        localStorage.setItem('customServices', JSON.stringify(services));
-      }
-
-      msg.style.color = 'var(--green)';
-      msg.innerText = 'Service added successfully!';
-      
-      document.getElementById('cs-name').value = '';
-      document.getElementById('cs-desc').value = '';
-      document.getElementById('cs-icon').value = '';
-      fileInput.value = '';
-      
-      setTimeout(() => { msg.innerText = ''; }, 3000);
-    } catch (e) {
-      console.error(e);
-      msg.style.color = 'var(--red)';
-      msg.innerText = 'Failed to add service: ' + e.message;
-    } finally {
-      addServiceBtn.disabled = false;
-    }
+/* ===== XHR Upload with Progress ===== */
+function uploadImageWithProgress(file, token, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/upload');
+    if (token) xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable && onProgress) onProgress(Math.round(e.loaded / e.total * 100));
+    };
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try { resolve(JSON.parse(xhr.responseText)); }
+        catch(e2) { reject(new Error('Invalid JSON response')); }
+      } else { reject(new Error('Upload failed: ' + xhr.status)); }
+    };
+    xhr.onerror = () => reject(new Error('Network error'));
+    const fd = new FormData();
+    fd.append('file', file);
+    xhr.send(fd);
   });
 }
+
+function showProg(wrapId, barId, pctId, pct) {
+  const w = document.getElementById(wrapId); if (w) w.style.display = 'block';
+  const b = document.getElementById(barId); if (b) b.style.width = pct + '%';
+  const p = document.getElementById(pctId); if (p) p.textContent = pct + '%';
+}
+function hideProg(wrapId) {
+  const w = document.getElementById(wrapId);
+  if (w) setTimeout(() => w.style.display = 'none', 800);
+}
+
+/* Live image preview on file select */
+function bindPreview(inpId, imgId) {
+  const inp = document.getElementById(inpId);
+  const img = document.getElementById(imgId);
+  if (!inp || !img) return;
+  inp.addEventListener('change', () => {
+    const file = inp.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = e => { img.src = e.target.result; img.style.display = 'block'; };
+    r.readAsDataURL(file);
+  });
+}
+bindPreview('fc-hero-image', 'fc-hero-preview');
+bindPreview('cs-image-file', 'cs-image-preview');
+
+/* ===== Frontend CMS ===== */
+async function loadFrontendContent() {
+  try {
+    const data = await fetchApi('/api/content');
+    const s = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+    s('fc-hero-eyebrow', data.hero_eyebrow);
+    s('fc-hero-title', data.hero_title);
+    s('fc-hero-subtitle', data.hero_subtitle);
+    s('fc-whyus-heading', data.whyus_heading);
+    s('fc-swedish-title', data.swedish_title);
+    s('fc-swedish-desc', data.swedish_desc);
+    s('fc-contact-phone', data.contact_phone);
+    s('fc-contact-email', data.contact_email);
+    if (data.hero_bg_url) {
+      const img = document.getElementById('fc-hero-preview');
+      if (img) { img.src = data.hero_bg_url; img.style.display = 'block'; }
+    }
+  } catch(e) { console.warn('loadFrontendContent:', e.message); }
+}
+
+async function saveCmsSection(items, msgId, btn, label) {
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving\u2026'; }
+  const msg = document.getElementById(msgId);
+  try {
+    await fetchApi('/api/content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+    if (msg) { msg.style.color = 'var(--green)'; msg.textContent = '\u2713 Saved!'; setTimeout(() => msg.textContent = '', 3000); }
+  } catch(e) {
+    if (msg) { msg.style.color = 'var(--red)'; msg.textContent = 'Error: ' + e.message; }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '\U0001f4be ' + label; }
+  }
+}
+
+const bsf = document.getElementById('btn-save-frontend');
+if (bsf) bsf.addEventListener('click', async () => {
+  let url = (document.getElementById('fc-hero-preview') || {}).src || '';
+  const fi = document.getElementById('fc-hero-image');
+  if (fi && fi.files.length > 0) {
+    try {
+      showProg('fc-hero-progress', 'fc-hero-bar', 'fc-hero-pct', 0);
+      const r = await uploadImageWithProgress(fi.files[0], authToken,
+        pct => showProg('fc-hero-progress', 'fc-hero-bar', 'fc-hero-pct', pct));
+      url = r.secure_url || r.url;
+      const img = document.getElementById('fc-hero-preview');
+      if (img) { img.src = url; img.style.display = 'block'; }
+      hideProg('fc-hero-progress');
+    } catch(e) { hideProg('fc-hero-progress'); alert('Upload failed: ' + e.message); return; }
+  }
+  await saveCmsSection([
+    { id: 'hero_eyebrow', value: (document.getElementById('fc-hero-eyebrow') || {}).value || '' },
+    { id: 'hero_title',   value: (document.getElementById('fc-hero-title') || {}).value || '' },
+    { id: 'hero_subtitle', value: (document.getElementById('fc-hero-subtitle') || {}).value || '' },
+    { id: 'hero_bg_url',  value: url }
+  ], 'fc-msg', bsf, 'Save Changes');
+});
+
+const bsh = document.getElementById('btn-save-highlights');
+if (bsh) bsh.addEventListener('click', () => saveCmsSection([
+  { id: 'whyus_heading', value: (document.getElementById('fc-whyus-heading') || {}).value || '' },
+  { id: 'swedish_title', value: (document.getElementById('fc-swedish-title') || {}).value || '' },
+  { id: 'swedish_desc',  value: (document.getElementById('fc-swedish-desc') || {}).value || '' },
+], 'fc-highlights-msg', bsh, 'Save Highlights'));
+
+const bsc = document.getElementById('btn-save-contact');
+if (bsc) bsc.addEventListener('click', () => saveCmsSection([
+  { id: 'contact_phone', value: (document.getElementById('fc-contact-phone') || {}).value || '' },
+  { id: 'contact_email', value: (document.getElementById('fc-contact-email') || {}).value || '' },
+], 'fc-contact-msg', bsc, 'Save Contact'));
+
+/* ===== Service Modal ===== */
+const svcModal = document.getElementById('service-modal');
+let allServicesData = [];
+
+const openBtn = document.getElementById('btn-open-service-modal');
+if (openBtn) openBtn.addEventListener('click', () => {
+  ['cs-id', 'cs-name', 'cs-desc', 'cs-icon', 'cs-existing-image'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const img = document.getElementById('cs-image-preview'); if (img) img.style.display = 'none';
+  const fi2 = document.getElementById('cs-image-file'); if (fi2) fi2.value = '';
+  document.getElementById('cs-form-title').textContent = 'Add New Service';
+  document.getElementById('btn-add-service').textContent = 'Save Service';
+  document.getElementById('cs-msg').textContent = '';
+  if (svcModal) svcModal.classList.add('active');
+});
+
+const closeBtn = document.getElementById('btn-close-service-modal');
+if (closeBtn) closeBtn.addEventListener('click', () => svcModal && svcModal.classList.remove('active'));
+const cancelBtn = document.getElementById('btn-cancel-service');
+if (cancelBtn) cancelBtn.addEventListener('click', () => svcModal && svcModal.classList.remove('active'));
+if (svcModal) svcModal.addEventListener('click', e => { if (e.target === svcModal) svcModal.classList.remove('active'); });
+
+/* ===== Load + Render Services ===== */
+async function loadManageServices() {
+  const wrap = document.getElementById('manage-services-table-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '<div style="padding:20px;color:var(--muted)">Loading\u2026</div>';
+  try {
+    allServicesData = await fetchApi('/api/services');
+    if (!allServicesData.length) {
+      wrap.innerHTML = '<div class="empty-state">No services yet. Click + Add New Service to create one.</div>';
+      return;
+    }
+    wrap.innerHTML = '<div class="services-grid">' + allServicesData.map(s => `
+      <div class="service-card-admin">
+        <img src="${s.image || ''}" class="service-card-img" alt="${s.name}"
+             onerror="this.style.background='rgba(255,255,255,.05)';this.style.minHeight='140px'">
+        <div class="service-card-actions">
+          <button class="action-btn-circle" onclick="editService('${s.id}')" title="Edit">\u270e</button>
+          <button class="action-btn-circle delete" onclick="deleteService('${s.id}')" title="Delete">\U0001f5d1</button>
+        </div>
+        <div class="service-card-body">
+          <div class="service-card-title">${s.icon || ''} ${s.name}</div>
+          <div class="service-card-desc">${s.desc || ''}</div>
+        </div>
+      </div>`).join('') + '</div>';
+  } catch(e) {
+    wrap.innerHTML = '<div class="empty-state">Failed to load services. Please refresh.</div>';
+  }
+}
+
+window.editService = function(id) {
+  const svc = allServicesData.find(s => s.id === id);
+  if (!svc) return;
+  document.getElementById('cs-id').value = svc.id;
+  document.getElementById('cs-name').value = svc.name;
+  document.getElementById('cs-desc').value = svc.desc;
+  document.getElementById('cs-icon').value = svc.icon || '';
+  document.getElementById('cs-existing-image').value = svc.image || '';
+  const img2 = document.getElementById('cs-image-preview');
+  if (img2 && svc.image) { img2.src = svc.image; img2.style.display = 'block'; }
+  document.getElementById('cs-form-title').textContent = 'Edit Service';
+  document.getElementById('btn-add-service').textContent = 'Update Service';
+  document.getElementById('cs-msg').textContent = '';
+  if (svcModal) svcModal.classList.add('active');
+};
+
+const addBtn = document.getElementById('btn-add-service');
+if (addBtn) addBtn.addEventListener('click', async () => {
+  const name = (document.getElementById('cs-name') || {}).value?.trim();
+  const desc = (document.getElementById('cs-desc') || {}).value?.trim();
+  const icon = (document.getElementById('cs-icon') || {}).value?.trim();
+  const fi3 = document.getElementById('cs-image-file');
+  const existing = (document.getElementById('cs-existing-image') || {}).value || '';
+  const svcId = (document.getElementById('cs-id') || {}).value || '';
+  const msg2 = document.getElementById('cs-msg');
+
+  if (!name || !desc) {
+    msg2.style.color = 'var(--red)'; msg2.textContent = 'Name and description are required.'; return;
+  }
+  if (!svcId && !fi3?.files.length) {
+    msg2.style.color = 'var(--red)'; msg2.textContent = 'Please select an image.'; return;
+  }
+
+  addBtn.disabled = true; addBtn.textContent = 'Saving\u2026';
+  msg2.style.color = 'var(--gold)'; msg2.textContent = '';
+
+  try {
+    let imgUrl = existing;
+    if (fi3 && fi3.files.length > 0) {
+      msg2.textContent = 'Uploading image\u2026';
+      showProg('cs-image-progress', 'cs-bar', 'cs-pct', 0);
+      const r2 = await uploadImageWithProgress(fi3.files[0], authToken,
+        pct => showProg('cs-image-progress', 'cs-bar', 'cs-pct', pct));
+      imgUrl = r2.secure_url || r2.url;
+      hideProg('cs-image-progress');
+    }
+
+    const payload = { name, desc, icon: icon || '\u2728', image: imgUrl };
+    if (svcId) payload.id = svcId;
+
+    await fetchApi('/api/services', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    msg2.style.color = 'var(--green)'; msg2.textContent = '\u2713 Service saved!';
+    setTimeout(() => { if (svcModal) svcModal.classList.remove('active'); msg2.textContent = ''; }, 1200);
+    loadManageServices();
+  } catch(e) {
+    msg2.style.color = 'var(--red)'; msg2.textContent = 'Error: ' + e.message;
+  } finally {
+    addBtn.disabled = false;
+    addBtn.textContent = (document.getElementById('cs-id') || {}).value ? 'Update Service' : 'Save Service';
+  }
+});
+
+window.deleteService = async function(id) {
+  if (!confirm('Delete this service? This cannot be undone.')) return;
+  try {
+    await fetchApi('/api/services/' + id, { method: 'DELETE' });
+    loadManageServices();
+  } catch(e) { alert('Delete failed: ' + e.message); }
+};
 </script>
 </body>
 </html>
