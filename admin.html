@@ -1205,6 +1205,17 @@ function uploadImageWithProgress(file, token, onProgress) {
   });
 }
 
+/* ===== CMS Sub-nav (Hero / Highlights / Contact) ===== */
+document.querySelectorAll('.cms-nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.cms-nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.cms-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    const target = document.getElementById('cms-' + btn.dataset.cms);
+    if (target) target.classList.add('active');
+  });
+});
+
 function showProg(wrapId, barId, pctId, pct) {
   const w = document.getElementById(wrapId); if (w) w.style.display = 'block';
   const b = document.getElementById(barId); if (b) b.style.width = pct + '%';
