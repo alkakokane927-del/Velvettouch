@@ -722,20 +722,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Active highlight on scroll — pick section whose top is closest to viewport top
+  // Active highlight on scroll
   function updateMbNav() {
-    const scrollTop = window.scrollY || window.pageYOffset;
-    const viewMid = scrollTop + window.innerHeight * 0.4; // 40% down the viewport
+    // 40% down the viewport
+    const viewMid = window.innerHeight * 0.4; 
     let closest = null;
     let closestDist = Infinity;
 
     Object.values(navIdMap).forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
-      const dist = Math.abs(el.offsetTop - viewMid);
-      if (dist < closestDist) {
-        closestDist = dist;
+      
+      const rect = el.getBoundingClientRect();
+      // Check if the 40% viewport mark falls within this section's top/bottom
+      // or if it's the closest one if none strictly contain it
+      if (rect.top <= viewMid && rect.bottom > viewMid) {
         closest = id;
+        closestDist = 0; // Exact match
+      } else if (closestDist !== 0) {
+        // Fallback for edge cases (e.g., bottom of page)
+        const dist = Math.abs(rect.top - viewMid);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = id;
+        }
       }
     });
 

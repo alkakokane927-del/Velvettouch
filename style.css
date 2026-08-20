@@ -1299,7 +1299,10 @@ button { cursor: pointer; border: none; background: none; }
   #city-bar      { display: none; }
   #main-header   { top: 0; }
   .sub-header    { display: none; }
-  .hamburger     { display: flex; }
+  /* Bottom nav replaces hamburger menu — hide both hamburger and drawer on mobile */
+  .hamburger               { display: none; }
+  .mobile-nav-overlay,
+  .mobile-nav-overlay.open { display: none !important; }
   .main-nav      { display: none; }
   /* Hide Book Now from header on mobile — bottom nav provides navigation */
   .nav-book-btn  { display: none; }
@@ -1370,9 +1373,9 @@ button { cursor: pointer; border: none; background: none; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-logo-img { height: 54px; }
 
-  /* Floating WA & Music */
-  .floating-wa-btn { bottom: 18px; right: 18px; width: 50px; height: 50px; font-size: 22px; }
-  .floating-music { bottom: 18px; left: 18px; width: 50px; height: 50px; font-size: 22px; }
+  /* Floating buttons on mobile — WA left, music hidden (nav covers navigation) */
+  .floating-wa-btn { bottom: 100px; left: 14px; right: auto; width: 48px; height: 48px; font-size: 20px; }
+  .floating-music  { display: none; }   /* hidden on mobile to reduce clutter */
 }
 
 /* =============================================

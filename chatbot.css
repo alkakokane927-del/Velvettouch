@@ -55,7 +55,7 @@
   position: fixed;
   bottom: 160px;
   right: 24px;
-  z-index: 8999;
+  z-index: 10000; /* Increased to cover mobile bottom nav (9999) */
   width: 370px;
   max-height: 600px;
   border-radius: 20px;
@@ -421,10 +421,23 @@
 /* ---- Mobile ---- */
 @media (max-width: 480px) {
   #chatbot-panel {
-    right: 0; left: 0; bottom: 0;
+    right: 0; left: 0;
+    bottom: 0;
     width: 100%;
-    max-height: 85vh;
+    max-height: 82vh;
     border-radius: 20px 20px 0 0;
   }
-  #chatbot-toggle { bottom: 80px; right: 16px; }
+  /* Push toggle ABOVE the bottom nav (nav bottom:16px + ~70px height = 86px) */
+  #chatbot-toggle {
+    bottom: 115px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+  
+  /* Hide the redundant floating 'X' toggle when chat is open on mobile */
+  #chatbot-toggle.open {
+    display: none !important;
+  }
 }
+
