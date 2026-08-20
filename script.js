@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!loader) { if (callback) callback(); return; }
 
     loader.classList.remove('hidden');
+    const realContent = document.getElementById('real-loader-content');
+    if (realContent) realContent.style.opacity = '1';
+
     loaderBar.style.width = '0%';
     loaderLogoWrap.className = 'loader-logo-wrap';
     document.body.style.overflow = 'hidden';
@@ -94,9 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(tick);
   }
   // Check if loader has been seen in this session
+  const tapToStart = document.getElementById('tap-to-start');
+
   if (sessionStorage.getItem('loaderSeen')) {
     loader.classList.add('hidden');
     loader.style.display = 'none'; 
+    if (tapToStart) { tapToStart.style.display = 'none'; tapToStart.classList.add('hidden'); }
     document.body.style.overflow = '';
     
     // Trigger entrance animations immediately
@@ -106,7 +112,29 @@ document.addEventListener('DOMContentLoaded', function () {
     if (fab) fab.classList.add('vt-fab-in');
   } else {
     sessionStorage.setItem('loaderSeen', 'true');
-    runLoader(null);
+    if (tapToStart) {
+      tapToStart.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      // keep real loader visible underneath but it won't animate until runLoader is called
+      
+      tapToStart.addEventListener('click', () => {
+        // Try playing music explicitly on this trusted event
+        if (music) {
+          music.play().then(() => {
+            if (musicToggle) musicToggle.classList.remove('muted');
+          }).catch(() => {});
+        }
+        
+        tapToStart.classList.add('hidden'); // begins fading out
+        runLoader(null); // start the loader underneath immediately
+        
+        setTimeout(() => {
+          tapToStart.style.display = 'none';
+        }, 800); // match CSS transition
+      });
+    } else {
+      runLoader(null);
+    }
   }
 
 
@@ -289,6 +317,67 @@ document.addEventListener('DOMContentLoaded', function () {
 
   tagAnimations();
 
+  /* --- Render Frontend Content from API --- */
+  async function loadFrontendContent() {
+    try {
+      const res = await fetch('/api/content');
+      if (res.ok) {
+        const content = await res.json();
+        
+        if (content.hero_eyebrow) {
+          const eyebrow = document.getElementById('dyn-hero-eyebrow');
+          if (eyebrow) eyebrow.innerHTML = content.hero_eyebrow;
+        }
+        if (content.hero_title) {
+          const title = document.getElementById('dyn-hero-title');
+          if (title) title.innerHTML = content.hero_title;
+        }
+        if (content.hero_subtitle) {
+          const subtitle = document.getElementById('dyn-hero-subtitle');
+          if (subtitle) subtitle.innerHTML = content.hero_subtitle;
+        }
+        if (content.hero_bg_url) {
+          const heroBg = document.getElementById('hero-bg');
+          if (heroBg) heroBg.style.backgroundImage = `url('${content.hero_bg_url}')`;
+        }
+
+        if (content.whyus_heading) {
+          const whyUs = document.getElementById('dyn-whyus-heading');
+          if (whyUs) whyUs.innerHTML = content.whyus_heading;
+        }
+        if (content.swedish_title) {
+          const swTitle = document.getElementById('dyn-swedish-title');
+          if (swTitle) swTitle.innerHTML = content.swedish_title;
+        }
+        if (content.swedish_desc) {
+          const swDesc = document.getElementById('dyn-swedish-desc');
+          if (swDesc) swDesc.innerHTML = content.swedish_desc;
+        }
+        if (content.contact_phone) {
+          const callBtn = document.getElementById('book-call-btn');
+          if (callBtn) {
+            callBtn.href = 'tel:' + content.contact_phone.replace(/[^0-9+]/g, '');
+            callBtn.innerHTML = '&#128222; Call ' + content.contact_phone;
+          }
+          const footerPhone = document.getElementById('dyn-contact-phone');
+          if (footerPhone) footerPhone.innerHTML = content.contact_phone;
+          
+          document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => {
+            const num = content.contact_phone.replace(/[^0-9]/g, '');
+            if (num) link.href = link.href.replace(/https:\/\/wa\.me\/[0-9]+/, 'https://wa.me/' + num);
+          });
+        }
+        if (content.contact_email) {
+          const footerEmail = document.getElementById('dyn-contact-email');
+          if (footerEmail) footerEmail.innerHTML = content.contact_email;
+        }
+      }
+    } catch(e) {
+      console.warn('Failed to load frontend content', e);
+    }
+  }
+  loadFrontendContent();
+
   /* --- Render Custom Services from API --- */
   async function renderCustomServices() {
     const grid = document.querySelector('.service-list-grid');
@@ -300,7 +389,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const res = await fetch('/api/services');
         if (res.ok) {
           customServices = await res.json();
-          // Cache locally
           localStorage.setItem('customServices', JSON.stringify(customServices));
         } else {
           throw new Error('API error');
@@ -323,12 +411,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h3 class="sl-title" data-en="${service.name}" data-hi="${service.name}" data-mr="${service.name}">${service.name}</h3>
                 <p class="sl-desc" data-en="${service.desc}" data-hi="${service.desc}" data-mr="${service.desc}">${service.desc}</p>
               </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20${encodeURIComponent(service.name)}%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करा" data-mr="बुक करा">Book</a>
+              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20${encodeURIComponent(service.name)}%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बूक करा" data-mr="बुक करा">Book</a>
             </div>
           </div>
         `;
         grid.insertAdjacentHTML('beforeend', cardHtml);
       });
+      
+      // Re-run the observer on the newly added elements so they actually fade in!
+      if (typeof revealObserver !== 'undefined') {
+        grid.querySelectorAll('[data-vt-anim]').forEach(el => revealObserver.observe(el));
+      }
     } catch(e) {
       console.error('Error rendering custom services:', e);
     }
@@ -603,5 +696,37 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   applyLanguage('en');
+
+  /* ===== MOBILE BOTTOM NAV LOGIC ===== */
+  const sections = document.querySelectorAll("section");
+  const navItems = document.querySelectorAll(".mb-nav-item");
+  
+  navItems.forEach(item => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = item.getAttribute("href").substring(1);
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= (sectionTop - sectionHeight / 3)) {
+        current = section.getAttribute("id");
+      }
+    });
+    navItems.forEach(item => {
+      item.classList.remove("active");
+      if (item.getAttribute("href").substring(1) === current) {
+        item.classList.add("active");
+      }
+    });
+  });
 
 });

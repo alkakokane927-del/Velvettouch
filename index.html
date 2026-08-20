@@ -16,11 +16,26 @@
 </head>
 <body>
 
+  <!-- ===== TAP TO START ===== -->
+  <div id="tap-to-start" class="page-loader hidden" style="z-index: 100000; cursor: pointer; background: transparent;">
+    <div class="loader-content">
+      <div class="loader-logo-wrap">
+        <img src="images/logo.png" alt="Velvet Touch Massage Logo" class="loader-logo-img" />
+      </div>
+      <div class="tap-text" style="font-family:'Cormorant Garamond',serif; color:#C9A96E; font-size:24px; margin-top:30px; letter-spacing:2px; text-transform:uppercase; animation:pulseTap 2s infinite;">
+        Tap to Enter
+      </div>
+    </div>
+  </div>
+  <style>
+    @keyframes pulseTap { 0%,100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+  </style>
+
   <!-- ===== PAGE LOADER ===== -->
   <div id="page-loader" class="page-loader">
     <div class="loader-bg"></div>
     <div class="loader-glow"></div>
-    <div class="loader-content">
+    <div class="loader-content" id="real-loader-content" style="opacity: 0; transition: opacity 0.8s ease;">
       <div class="loader-logo-wrap" id="loader-logo-wrap">
         <img src="images/logo.png" alt="Velvet Touch Massage Logo" class="loader-logo-img" id="loader-logo-img" />
       </div>
@@ -119,9 +134,9 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <div class="hero-ladies-badge" data-en="♀ Exclusively for Ladies" data-hi="♀ केवल महिलाओं के लिए" data-mr="♀ फक्त महिलांसाठी">♀ Exclusively for Ladies</div>
-        <p class="hero-eyebrow" data-en="Your Journey to Serenity Begins Here" data-hi="आपकी शांति की यात्रा यहाँ शुरू होती है" data-mr="तुमचा शांतीचा प्रवास इथूनच सुरू होतो">Your Journey to Serenity Begins Here</p>
-        <h1 class="hero-title" data-en="Prioritise Your<br><em>Wellbeing</em>" data-hi="अपनी<br><em>सेहत</em> को प्राथमिकता दें" data-mr="तुमच्या<br><em>आरोग्याला</em> प्राधान्य द्या">Prioritise Your<br><em>Wellbeing</em></h1>
-        <p class="hero-subtitle" data-en="A sacred sanctuary crafted exclusively for women. Relax, re-energise, and rediscover yourself with our signature therapies." data-hi="महिलाओं के लिए विशेष रूप से बनाया गया एक पवित्र स्थान। हमारी विशेष थेरपी से आराम करें और खुद को फिर से ऊर्जावान बनाएं।" data-mr="महिलांसाठी विशेष तयार केलेले एक पवित्र अभयारण्य. आमच्या विशेष थेरपींनी आराम करा, पुन्हा ऊर्जा मिळवा.">A sacred sanctuary crafted exclusively for women. Relax, re-energise, and rediscover yourself with our signature therapies.</p>
+        <p class="hero-eyebrow" id="dyn-hero-eyebrow" data-en="Your Journey to Serenity Begins Here" data-hi="आपकी शांति की यात्रा यहाँ शुरू होती है" data-mr="तुमचा शांतीचा प्रवास इथूनच सुरू होतो">Your Journey to Serenity Begins Here</p>
+        <h1 class="hero-title" id="dyn-hero-title" data-en="Prioritise Your<br><em>Wellbeing</em>" data-hi="अपनी<br><em>सेहत</em> को प्राथमिकता दें" data-mr="तुमच्या<br><em>आरोग्याला</em> प्राधान्य द्या">Prioritise Your<br><em>Wellbeing</em></h1>
+        <p class="hero-subtitle" id="dyn-hero-subtitle" data-en="A sacred sanctuary crafted exclusively for women. Relax, re-energise, and rediscover yourself with our signature therapies." data-hi="महिलाओं के लिए विशेष रूप से बनाया गया एक पवित्र स्थान। हमारी विशेष थेरपी से आराम करें और खुद को फिर से ऊर्जावान बनाएं।" data-mr="महिलांसाठी विशेष तयार केलेले एक पवित्र अभयारण्य. आमच्या विशेष थेरपींनी आराम करा, पुन्हा ऊर्जा मिळवा.">A sacred sanctuary crafted exclusively for women. Relax, re-energise, and rediscover yourself with our signature therapies.</p>
         <div class="hero-ctas">
           <a href="#book" class="btn-primary-cta" id="hero-book-btn" data-en="Book a Spa Now!" data-hi="अभी स्पा बुक करें!" data-mr="आता स्पा बुक करा!">Book a Spa Now!</a>
           <a href="#services" class="btn-secondary-cta" id="hero-explore-btn" data-en="Explore Treatments" data-hi="उपचार देखें" data-mr="उपचार पहा">Explore Treatments</a>
@@ -179,8 +194,8 @@
             <span class="sb-star-label" data-en="SPECIAL ATTRACTION" data-hi="विशेष आकर्षण" data-mr="विशेष आकर्षण">SPECIAL ATTRACTION</span>
           </div>
           <div class="sb-content">
-            <h2 class="sb-title" data-en="Special Swedish Massage Therapy" data-hi="विशेष स्वीडिश मसाज थेरपी" data-mr="विशेष स्वीडिश मसाज थेरपी">⭐ स्पेशल स्वीडिश मसाज थेरपी</h2>
-            <p class="sb-sub" data-en="Swedish Massage · Deep Tissue Massage · Acupressure Technique · Head Massage · Foot Massage · Cupping Therapy" data-hi="स्वीडिश मसाज · डीप टिशू मसाज · एक्यूप्रेशर तकनीक · हेड मसाज · फुट मसाज · कपिंग थेरपी" data-mr="स्वीडिश मसाज · डीप टिशू मसाज · अॅक्युप्रेशर तंत्र · हेड मसाज · फुट मसाज · कपिंग थेरपी">Swedish Massage · Deep Tissue Massage · Acupressure · Head Massage · Foot Massage · Cupping Therapy</p>
+            <h2 id="dyn-swedish-title" class="sb-title" data-en="Special Swedish Massage Therapy" data-hi="विशेष स्वीडिश मसाज थेरपी" data-mr="विशेष स्वीडिश मसाज थेरपी">⭐ स्पेशल स्वीडिश मसाज थेरपी</h2>
+            <p id="dyn-swedish-desc" class="sb-sub" data-en="Swedish Massage · Deep Tissue Massage · Acupressure Technique · Head Massage · Foot Massage · Cupping Therapy" data-hi="स्वीडिश मसाज · डीप टिशू मसाज · एक्यूप्रेशर तकनीक · हेड मसाज · फुट मसाज · कपिंग थेरपी" data-mr="स्वीडिश मसाज · डीप टिशू मसाज · अॅक्युप्रेशर तंत्र · हेड मसाज · फुट मसाज · कपिंग थेरपी">Swedish Massage · Deep Tissue Massage · Acupressure · Head Massage · Foot Massage · Cupping Therapy</p>
             <div class="sb-badge" data-en="♀ Only for Ladies" data-hi="♀ केवल महिलाओं के लिए" data-mr="♀ फक्त महिलांसाठी">♀ Only for Ladies</div>
           </div>
           <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20the%20Special%20Swedish%20Massage%20Therapy.%20Please%20confirm%20availability." class="sb-book-btn" target="_blank" rel="noopener noreferrer" id="swedish-book-btn" data-en="Book Now →" data-hi="अभी बुक करें →" data-mr="आता बुक करा →">Book Now →</a>
@@ -203,86 +218,8 @@
         </div>
 
         <!-- Service List Cards (compact) -->
-        <div class="service-list-grid">
-          <div class="sl-card" id="sl-head">
-            <div class="sl-img"><img src="images/head_massage.png" alt="Head Massage" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">🧖‍♀️</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Head Massage" data-hi="हेड मसाज" data-mr="हेड मसाज">Head Massage</h3>
-                <p class="sl-desc" data-en="Relieves tension headaches, improves scalp circulation, and deeply relaxes your mind." data-hi="तनाव सिरदर्द को दूर करता है, खोपड़ी की रक्त संचार को बेहतर बनाता है।" data-mr="तणाव डोकेदुखी दूर करते, टाळूचे रक्त परिसंचरण सुधारते.">Relieves tension headaches, improves scalp circulation, and deeply relaxes your mind.</p>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Head%20Massage%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
-          <div class="sl-card" id="sl-face">
-            <div class="sl-img"><img src="images/face_massage.png" alt="Face Massage" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">✨</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Face Massage" data-hi="फेस मसाज" data-mr="फेस मसाज">Face Massage</h3>
-                <p class="sl-desc" data-en="Glow-inducing facial massage that tones, lifts, and radiates natural beauty." data-hi="चमक लाने वाली चेहरे की मालिश जो टोन और उठाती है।" data-mr="टोन करणारी, उचलणारी आणि नैसर्गिक सौंदर्य प्रकट करणारी चेहर्‍याची मसाज.">Glow-inducing facial massage that tones, lifts, and radiates natural beauty.</p>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Face%20Massage%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
-          <div class="sl-card" id="sl-foot">
-            <div class="sl-img"><img src="images/foot_massage.png" alt="Foot Massage" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">🦶</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Foot Massage" data-hi="फुट मसाज" data-mr="फुट मसाज">Foot Massage</h3>
-                <p class="sl-desc" data-en="Reflexology-based foot massage to release full-body stress through pressure points." data-hi="रिफ्लेक्सोलॉजी-आधारित फुट मसाज जो दबाव बिंदुओं के माध्यम से तनाव को मुक्त करता है।" data-mr="प्रतिक्षेपशास्त्र-आधारित फुट मसाज जी दाब बिंदूंद्वारे संपूर्ण शरीराचा ताण सोडते.">Reflexology-based foot massage to release full-body stress through pressure points.</p>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Foot%20Massage%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
-          <div class="sl-card" id="sl-fullbody">
-            <div class="sl-img"><img src="images/full_body_massage.png" alt="Full Body Massage" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">💆‍♀️</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Full Body Massage" data-hi="फुल बॉडी मसाज" data-mr="फुल बॉडी मसाज">Full Body Massage</h3>
-                <p class="sl-desc" data-en="Head-to-toe therapeutic massage using warm herbal oils for complete body relaxation." data-hi="गर्म हर्बल तेलों का उपयोग करके सिर से पैर तक चिकित्सीय मालिश।" data-mr="उष्ण हर्बल तेलांचा वापर करून संपूर्ण शरीर मसाज.">Head-to-toe therapeutic massage using warm herbal oils for complete body relaxation.</p>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Full%20Body%20Massage%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
-          <div class="sl-card sl-featured" id="sl-steamer">
-            <div class="sl-img"><img src="images/steamer.png" alt="Full Body Steamer" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">🌫️</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Full Body Steamer" data-hi="फुल बॉडी स्टीमर" data-mr="फुल बॉडी स्टीमर">Full Body Steamer</h3>
-                <p class="sl-desc" data-en="Open pores, detox deep, and emerge glowing. Steam therapy for ultimate skin renewal and muscle relief." data-hi="छिद्रों को खोलें, गहरे डिटॉक्स करें, और चमकते हुए बाहर निकलें।" data-mr="छिद्रे उघडा, खोल डिटॉक्स करा आणि चमकत बाहेर या.">Open pores, detox deep, and emerge glowing. Steam therapy for ultimate skin renewal and muscle relief.</p>
-                <span class="sl-tag" data-en="Detox · Relax · Rejuvenate" data-hi="डिटॉक्स · आराम · कायाकल्प" data-mr="डिटॉक्स · आराम · कायाकल्प">Detox · Relax · Rejuvenate</span>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Full%20Body%20Steamer%20Session%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
-          <div class="sl-card" id="sl-cupping">
-            <div class="sl-img"><img src="images/cupping.png" alt="Cupping Therapy" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">🫙</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Cupping Therapy" data-hi="कपिंग थेरपी" data-mr="कपिंग थेरपी">Cupping Therapy</h3>
-                <p class="sl-desc" data-en="Ancient healing technique using suction cups to boost circulation and release deep muscle tension." data-hi="सक्शन कप का उपयोग करके रक्त संचार को बढ़ावा देने और गहरी मांसपेशियों के तनाव को मुक्त करने की प्राचीन तकनीक।" data-mr="सक्शन कप वापरून रक्त परिसंचरण वाढवण्यासाठी आणि खोल स्नायू तणाव सोडण्यासाठी प्राचीन उपचार तंत्र.">Ancient healing technique using suction cups to boost circulation and release deep muscle tension.</p>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Cupping%20Therapy%20Session%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
-          <div class="sl-card sl-featured" id="sl-scrub">
-            <div class="sl-img"><img src="images/body_scrub.png" alt="Body Scrub with Steam" loading="lazy"></div>
-            <div class="sl-content">
-              <div class="sl-icon">🫧</div>
-              <div class="sl-body">
-                <h3 class="sl-title" data-en="Body Scrub with Steam" data-hi="बॉडी स्क्रब विथ स्टीम" data-mr="बॉडी स्क्रब विथ स्टीम">Body Scrub with Steam</h3>
-                <p class="sl-desc" data-en="Exfoliate dead skin cells with herbal scrub followed by deep steam detox — silky smooth skin guaranteed." data-hi="हर्बल स्क्रब के साथ मृत त्वचा को एक्सफोलिएट करें, उसके बाद गहरी भाप डिटॉक्स।" data-mr="हर्बल स्क्रबने मृत त्वचा एक्सफोलिएट करा, त्यानंतर खोल स्टीम डिटॉक्स.">Exfoliate dead skin cells with herbal scrub followed by deep steam detox — silky smooth skin guaranteed.</p>
-                <span class="sl-tag" data-en="Glow · Smooth · Detox" data-hi="चमक · मुलायम · डिटॉक्स" data-mr="चमक · मुलायम · डिटॉक्स">Glow · Smooth · Detox</span>
-              </div>
-              <a href="https://wa.me/918001234567?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Body%20Scrub%20with%20Steam%20at%20Velvet%20Touch." class="sl-book" target="_blank" rel="noopener noreferrer" data-en="Book" data-hi="बुक करें" data-mr="बुक करा">Book</a>
-            </div>
-          </div>
+        <div class="service-list-grid" id="dynamic-services-grid">
+          <!-- Populated by script.js -->
         </div>
 
         <div class="services-cta-row" style="margin-top: 40px;">
@@ -433,7 +370,7 @@
       <div class="section-container">
         <div class="section-header">
           <p class="section-eyebrow" data-en="Why Choose Us" data-hi="हमें क्यों चुनें" data-mr="आम्हाला का निवडा">Why Choose Us</p>
-          <h2 class="section-title" data-en="A Sanctuary <em>Built for Her</em>" data-hi="उसके लिए <em>बनाया गया</em> अभयारण्य" data-mr="तिच्यासाठी <em>बनवलेले</em> अभयारण्य">A Sanctuary <em>Built for Her</em></h2>
+          <h2 id="dyn-whyus-heading" class="section-title" data-en="A Sanctuary <em>Built for Her</em>" data-hi="उसके लिए <em>बनाया गया</em> अभयारण्य" data-mr="तिच्यासाठी <em>बनवलेले</em> अभयारण्य">A Sanctuary <em>Built for Her</em></h2>
           <p class="section-subtitle" data-en="Every detail at Velvet Touch is thoughtfully crafted to make every woman feel safe, cherished, and completely at ease." data-hi="वेल्वेट टच की हर बात हर महिला को सुरक्षित और प्यारा महसूस कराने के लिए बनाई गई है।" data-mr="व्हेल्वेट टचमधील प्रत्येक तपशील प्रत्येक महिलेला सुरक्षित आणि आदरणीय वाटण्यासाठी तयार केला आहे.">Every detail at Velvet Touch is thoughtfully crafted to make every woman feel safe, cherished, and completely at ease.</p>
         </div>
         <div class="why-us-grid">
@@ -598,12 +535,34 @@
   <button id="music-toggle" class="floating-music" title="Toggle Ambient Music" aria-label="Toggle Ambient Music">
     <span class="music-icon">🎵</span>
   </button>
-  <audio id="bg-music" loop preload="auto">
-    <source src="audio/forest_whisper.mp3" type="audio/mpeg">
+  <audio id="bg-music" loop preload="auto" autoplay>
+    <source src="audio/relaxing_calming_music.mp3" type="audio/mpeg">
   </audio>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=9"></script>
   <script src="chatbot.js"></script>
   <script src="tracker.js"></script>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="#hero" class="mb-nav-item active">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span data-en="Home" data-hi="होम" data-mr="मुख्यपृष्ठ">Home</span>
+    </a>
+    <a href="#services" class="mb-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 6c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2zM12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+      <span data-en="Services" data-hi="सेवाएं" data-mr="सेवा">Services</span>
+    </a>
+    <a href="#trust" class="mb-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+      <span data-en="Reviews" data-hi="समीक्षा" data-mr="पुनरावलोकने">Reviews</span>
+    </a>
+    <a href="#contact" class="mb-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      <span data-en="Contact" data-hi="संपर्क" data-mr="संपर्क">Contact</span>
+    </a>
+  </nav>
+
 </body>
 </html>
+
