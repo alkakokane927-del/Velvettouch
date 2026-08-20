@@ -698,35 +698,60 @@ document.addEventListener('DOMContentLoaded', function () {
   applyLanguage('en');
 
   /* ===== MOBILE BOTTOM NAV LOGIC ===== */
-  const sections = document.querySelectorAll("section");
-  const navItems = document.querySelectorAll(".mb-nav-item");
-  
-  navItems.forEach(item => {
+  const mbNavItems = document.querySelectorAll(".mb-nav-item");
+
+  // Map nav href → actual section ID on page
+  const navIdMap = {
+    "hero":     "hero",
+    "services": "services",
+    "trust":    "testimonials",   // "Reviews" nav → testimonials section
+    "contact":  "book"            // "Contact" nav → book/enquiry section
+  };
+
+  // Smooth scroll click
+  mbNavItems.forEach(item => {
     item.addEventListener("click", (e) => {
       e.preventDefault();
-      const targetId = item.getAttribute("href").substring(1);
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: "smooth" });
-      }
+      const key = item.getAttribute("href").substring(1);
+      const realId = navIdMap[key] || key;
+      const target = document.getElementById(realId);
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+      // Immediately set active on click
+      mbNavItems.forEach(n => n.classList.remove("active"));
+      item.classList.add("active");
     });
   });
 
-  window.addEventListener("scroll", () => {
-    let current = "";
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
-      if (scrollY >= (sectionTop - sectionHeight / 3)) {
-        current = section.getAttribute("id");
+  // Active highlight on scroll — pick section whose top is closest to viewport top
+  function updateMbNav() {
+    const scrollTop = window.scrollY || window.pageYOffset;
+    const viewMid = scrollTop + window.innerHeight * 0.4; // 40% down the viewport
+    let closest = null;
+    let closestDist = Infinity;
+
+    Object.values(navIdMap).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const dist = Math.abs(el.offsetTop - viewMid);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = id;
       }
     });
-    navItems.forEach(item => {
+
+    // Find the nav key that maps to this section
+    const activeKey = Object.keys(navIdMap).find(k => navIdMap[k] === closest);
+
+    mbNavItems.forEach(item => {
       item.classList.remove("active");
-      if (item.getAttribute("href").substring(1) === current) {
+      if (item.getAttribute("href").substring(1) === activeKey) {
         item.classList.add("active");
       }
     });
-  });
+  }
+
+  window.addEventListener("scroll", updateMbNav, { passive: true });
+  updateMbNav(); // run once on load
 
 });
+
