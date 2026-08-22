@@ -422,22 +422,49 @@
 @media (max-width: 480px) {
   #chatbot-panel {
     right: 0; left: 0;
-    bottom: 0;
+    bottom: 0; top: 0;
     width: 100%;
-    max-height: 82vh;
-    border-radius: 20px 20px 0 0;
-  }
-  /* Push toggle ABOVE the bottom nav */
-  #chatbot-toggle {
-    bottom: 110px;
-    right: 16px;
-    width: 52px;
-    height: 52px;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
   }
   
-  /* Hide the redundant floating 'X' toggle when chat is open on mobile */
+  .cb-header {
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+  
+  .cb-input-area {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  #cb-input {
+    font-size: 16px; /* Prevents iOS auto-zoom when typing */
+  }
+
+  .cb-bubble {
+    font-size: 14.5px;
+    padding: 12px 16px;
+  }
+
+  .cb-msg-avatar {
+    width: 32px; height: 32px;
+  }
+
+  /* Push toggle ABOVE the bottom nav */
+  #chatbot-toggle {
+    bottom: 90px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+  }
+  
+  /* Hide the redundant floating "X" toggle when chat is open on mobile */
   #chatbot-toggle.open {
     display: none !important;
   }
 }
+
 
