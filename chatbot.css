@@ -17,12 +17,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 28px rgba(37,211,102,0.4);
+  box-shadow: 0 6px 28px rgba(107,45,62,0.55);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   outline: none;
 }
-#chatbot-toggle:hover { transform: scale(1.1); box-shadow: 0 10px 36px rgba(37,211,102,0.55); }
-#chatbot-toggle svg  { width: 34px; height: 34px; fill: #fff; transition: opacity 0.2s; }
+#chatbot-toggle:hover { transform: scale(1.1); box-shadow: 0 10px 36px rgba(107,45,62,0.65); }
+#chatbot-toggle svg  { width: 26px; height: 26px; fill: #fff; transition: opacity 0.2s; }
 #chatbot-toggle .icon-open  { display: block; }
 #chatbot-toggle .icon-close { display: none; }
 #chatbot-toggle.open .icon-open  { display: none; }
@@ -451,6 +451,7 @@
 
   .cb-msg-avatar {
     width: 32px; height: 32px;
+    font-size: 20px;
   }
 
   /* Push toggle ABOVE the bottom nav */
