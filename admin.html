@@ -614,11 +614,7 @@ async function tryLogin(){
   }
   
   // 1. Check local fallback credentials first (bypasses Firebase 'invalid-email' error for "admin")
-  if ((user === PASS.user || user === 'admin@velvettouch.com') && pass === PASS.pass) {
-    document.getElementById('login-screen').classList.add('hidden');
-    initDashboard();
-    return;
-  }
+  if ((user === PASS.user || user === 'admin@velvettouch.com') && pass === PASS.pass) { authToken = 'admin_bypass'; document.getElementById('login-screen').classList.add('hidden'); initDashboard(); return; }
 
   // 2. Otherwise, attempt Firebase Authentication
   err.textContent = 'Authenticating...';
@@ -1457,3 +1453,4 @@ window.deleteService = async function(id) {
 </script>
 </body>
 </html>
+
