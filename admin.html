@@ -1427,10 +1427,10 @@ if (addBtn) addBtn.addEventListener('click', async () => {
     if (svcId) payload.id = svcId;
 
     await fetchApi('/api/services', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+        method: svcId ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
 
     msg2.style.color = 'var(--green)'; msg2.textContent = '\u2713 Service saved!';
     setTimeout(() => { if (svcModal) svcModal.classList.remove('active'); msg2.textContent = ''; }, 1200);

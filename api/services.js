@@ -26,7 +26,8 @@ export default async function handler(req, res) {
     }
 
     try {
-      const { id, name, desc, icon, image } = req.body;
+      const { name, desc, icon, image } = req.body;
+      const id = req.body.id || 'svc-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5);
       const createdAt = new Date().toISOString();
 
       await db.execute({
