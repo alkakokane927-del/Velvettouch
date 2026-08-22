@@ -1364,7 +1364,7 @@ async function loadManageServices() {
              onerror="this.style.background='rgba(255,255,255,.05)';this.style.minHeight='140px'">
         <div class="service-card-actions">
           <button class="action-btn-circle" onclick="editService('${s.id}')" title="Edit">\u270e</button>
-          <button class="action-btn-circle delete" onclick="deleteService('${s.id}')" title="Delete">\U0001f5d1</button>
+          <button class="action-btn-circle delete" onclick="deleteService('${s.id}')" title="Delete">\u{1F5D1}</button>
         </div>
         <div class="service-card-body">
           <div class="service-card-title">${s.icon || ''} ${s.name}</div>
@@ -1453,5 +1453,6 @@ window.deleteService = async function(id) {
 </script>
 </body>
 </html>
+
 
 
