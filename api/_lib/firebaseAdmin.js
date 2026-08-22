@@ -1,12 +1,13 @@
-import admin from 'firebase-admin';
+import { getApps, initializeApp, cert } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-if (!admin.apps.length) {
+if (!getApps().length) {
   try {
-    admin.initializeApp({
-      credential: admin.credential.cert({
+    initializeApp({
+      credential: cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
         // Replace escaped newlines from environment variable
@@ -21,7 +22,7 @@ if (!admin.apps.length) {
 export const verifyToken = async (token) => {
   if (!token) return null;
   try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
+    const decodedToken = await getAuth().verifyIdToken(token);
     return decodedToken;
   } catch (error) {
     console.error('Error verifying auth token', error);
@@ -29,4 +30,4 @@ export const verifyToken = async (token) => {
   }
 };
 
-export default admin;
+export default getAuth;

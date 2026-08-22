@@ -44,5 +44,44 @@ export default async function handler(req, res) {
     }
   }
 
+  if (req.method === 'PUT') {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
+    const user = await verifyToken(authHeader.split('Bearer ')[1]);
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+      const { id, name, desc, icon, image } = req.body;
+      await db.execute({
+        sql: `UPDATE custom_services SET name = ?, desc = ?, icon = ?, image = ? WHERE id = ?`,
+        args: [name, desc, icon, image, id]
+      });
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+  }
+
+  if (req.method === 'DELETE') {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
+    const user = await verifyToken(authHeader.split('Bearer ')[1]);
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+      const id = new URL(req.url, `http://${req.headers.host}`).searchParams.get('id') || req.body?.id;
+      if (!id) return res.status(400).json({ error: 'Missing id' });
+      await db.execute({
+        sql: `DELETE FROM custom_services WHERE id = ?`,
+        args: [id]
+      });
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+  }
+
   return res.status(405).json({ error: 'Method not allowed' });
 }

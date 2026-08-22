@@ -1128,7 +1128,7 @@ button { cursor: pointer; border: none; background: none; }
   background: #160C0F;
   padding: 64px 5% 40px;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 36px;
 }
 .footer-brand { min-width: 0; }
@@ -1276,7 +1276,7 @@ button { cursor: pointer; border: none; background: none; }
    RESPONSIVE — TABLET (max 1024px)
    ============================================= */
 @media (max-width: 1024px) {
-  .footer-main { grid-template-columns: 1fr 1fr 1fr; }
+  .footer-main { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
   .why-us-grid { grid-template-columns: repeat(2, 1fr); }
   .categories-grid { grid-template-rows: 260px 260px; }

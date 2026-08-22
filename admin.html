@@ -8,7 +8,7 @@
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, getIdToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, getIdToken } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     
     // TODO: Replace with your Firebase config
     const firebaseConfig = {
@@ -21,14 +21,13 @@
       measurementId: "G-SZSTRFM5QV"
     };
 
-    let app, auth, googleProvider;
+    let app, auth;
     if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
       app = initializeApp(firebaseConfig);
       auth = getAuth(app);
-      googleProvider = new GoogleAuthProvider();
     }
 
-    window.firebaseAuth = { auth, googleProvider, signInWithPopup, onAuthStateChanged, signOut, getIdToken };
+    window.firebaseAuth = { auth, signInWithEmailAndPassword, onAuthStateChanged, signOut, getIdToken };
   </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -272,11 +271,12 @@ tr:hover td{background:rgba(255,255,255,.03)}
   <div class="login-box">
     <div class="login-logo">🌸</div>
     <div class="login-title">Admin Panel</div>
-    <div class="login-box">
-      <h2>Admin Login</h2>
-      <button id="login-btn" class="hm-btn" style="width:100%;margin-top:10px; background: #fff; color: #333; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px;">
-        Sign in with Google
+    <div style="margin-top: 32px;">
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:24px; margin-bottom:16px;">Admin Login</h2>
+      <input type="email" id="login-user" placeholder="Email Address" style="width: 100%; padding: 12px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none;">
+      <input type="password" id="login-pass" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: var(--text); outline: none;">
+      <button id="login-btn" class="hm-btn" style="width:100%; background: linear-gradient(135deg, var(--primary), var(--gold)); color: #fff; font-weight: 600;">
+        Sign In
       </button>
       <div id="login-error" class="login-error"></div>
     </div>
@@ -605,11 +605,27 @@ document.getElementById('login-btn').addEventListener('click', tryLogin);
 
 async function tryLogin(){
   const err = document.getElementById('login-error');
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value.trim();
+  
+  if (!user || !pass) {
+    err.textContent = 'Please enter email and password.';
+    return;
+  }
+  
+  // 1. Check local fallback credentials first (bypasses Firebase 'invalid-email' error for "admin")
+  if ((user === PASS.user || user === 'admin@velvettouch.com') && pass === PASS.pass) {
+    document.getElementById('login-screen').classList.add('hidden');
+    initDashboard();
+    return;
+  }
+
+  // 2. Otherwise, attempt Firebase Authentication
   err.textContent = 'Authenticating...';
 
   if (window.firebaseAuth && window.firebaseAuth.auth) {
     try {
-      const result = await window.firebaseAuth.signInWithPopup(window.firebaseAuth.auth, window.firebaseAuth.googleProvider);
+      const result = await window.firebaseAuth.signInWithEmailAndPassword(window.firebaseAuth.auth, user, pass);
       authToken = await window.firebaseAuth.getIdToken(result.user);
       document.getElementById('login-screen').classList.add('hidden');
       initDashboard();
@@ -617,9 +633,7 @@ async function tryLogin(){
       err.textContent = 'Login failed: ' + error.message;
     }
   } else {
-    // Fallback mode (since UI inputs are removed, we just auto-login for testing)
-    document.getElementById('login-screen').classList.add('hidden');
-    initDashboard();
+    err.textContent = 'Invalid credentials';
   }
 }
 document.getElementById('logout-btn').addEventListener('click', async () => {

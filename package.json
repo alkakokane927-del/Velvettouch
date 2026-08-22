@@ -11,13 +11,16 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "jest": "^30.4.2",
-    "jest-environment-jsdom": "^30.4.1"
+    "jest-environment-jsdom": "^30.4.1",
+    "puppeteer": "^25.8.0"
   },
   "dependencies": {
     "@libsql/client": "^0.17.4",
     "cloudinary": "^2.10.0",
-    "dotenv": "^17.4.2",
     "firebase-admin": "^14.2.0",
     "multiparty": "^4.3.0"
   }
